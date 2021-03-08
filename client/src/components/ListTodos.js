@@ -43,7 +43,7 @@ const ListTodos = () => {
   const checkTodo = async (todo_id) => {
     try {
       try {
-        console.log("f");
+        //일단 CHECK로 DONE 요청 보내는 것 구현하긴 했는데.. REACT 상태관리 제대로 공부 후 수정해야할듯
         const response = await fetch(
           `http://localhost:5000/checkTodo/${todo_id}`,
           {

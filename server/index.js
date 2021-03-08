@@ -94,7 +94,7 @@ app.post("/checkTodo/:id", async (req, res) => {
     const { id } = req.params;
 
     const deleteTodo = await pool.query(
-      "UPDATE todo SET done_yn = DECODE(done_yn, 'Y', 'N', 'Y') WHERE todo_id = $1",
+      "UPDATE todo SET done_yn = CASE WHEN done_yn = 'Y' THEN 'N' ELSE 'Y' END WHERE todo_id = $1",
       [id]
     );
     res.json("todo was UPDATED.");
