@@ -31,7 +31,7 @@ app.get("/getTodo", async (req, res) => {
   //await
   try {
     const todoList = await pool.query(
-      "SELECT todo_id, description FROM todo ORDER BY todo_id"
+      "SELECT todo_id, description, done_yn FROM todo ORDER BY todo_id"
     );
     res.json(todoList.rows);
   } catch (err) {
@@ -81,6 +81,23 @@ app.delete("/deleteTodo/:id", async (req, res) => {
       id,
     ]);
     res.json("todo was deleted.");
+  } catch (err) {
+    console.error(err.message);
+    res.json(err.message);
+  }
+});
+
+//update a todo
+app.post("/checkTodo/:id", async (req, res) => {
+  //await
+  try {
+    const { id } = req.params;
+
+    const deleteTodo = await pool.query(
+      "UPDATE todo SET done_yn = DECODE(done_yn, 'Y', 'N', 'Y') WHERE todo_id = $1",
+      [id]
+    );
+    res.json("todo was UPDATED.");
   } catch (err) {
     console.error(err.message);
     res.json(err.message);

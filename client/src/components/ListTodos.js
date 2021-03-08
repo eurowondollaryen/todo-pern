@@ -9,6 +9,7 @@ const ListTodos = () => {
       const body = {};
       const response = await fetch("http://localhost:5000/getTodo");
       const jsonData = await response.json();
+      console.log(jsonData);
       setTodos(jsonData);
     } catch (err) {
       console.error(err.message);
@@ -38,11 +39,32 @@ const ListTodos = () => {
       console.error(err.message);
     }
   };
+
+  const checkTodo = async (todo_id) => {
+    try {
+      try {
+        console.log("f");
+        const response = await fetch(
+          `http://localhost:5000/checkTodo/${todo_id}`,
+          {
+            method: "POST",
+          }
+        );
+        //setTodos(todos.filter((todo) => todo.todo_id !== todo_id));
+        console.log(response);
+      } catch (err) {
+        console.error(err.message);
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
   return (
     <Fragment>
       <table className="table mt-5 text-center">
         <thead>
           <tr>
+            <th>Done</th>
             <th>Description</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -51,6 +73,13 @@ const ListTodos = () => {
         <tbody>
           {todos.map((todo) => (
             <tr key={todo.todo_id}>
+              <td>
+                <input
+                  type="checkbox"
+                  className="form-check-input"
+                  onChange={() => checkTodo(todo.todo_id)}
+                />
+              </td>
               <td>{todo.description}</td>
               <td>
                 <EditTodo todo={todo} />
