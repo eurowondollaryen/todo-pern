@@ -15,7 +15,7 @@ app.post("/createTodo", async (req, res) => {
   try {
     const { description } = req.body;
     const newTodo = await pool.query(
-      "INSERT INTO todo (description) VALUES($1) RETURNING *",
+      "INSERT INTO todo (description, inst_time) VALUES($1, TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')) RETURNING *",
       [description]
     );
 
@@ -62,7 +62,7 @@ app.put("/updateTodo/:id", async (req, res) => {
     const { id } = req.params;
     const { description } = req.body;
     const updateTodo = await pool.query(
-      "UPDATE todo SET description = $1 WHERE todo_id = $2",
+      "UPDATE todo SET description = $1, updt_time = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS') WHERE todo_id = $2",
       [description, id]
     );
     res.json("todo was updated.");
@@ -94,7 +94,7 @@ app.post("/checkTodo/:id", async (req, res) => {
     const { id } = req.params;
 
     const deleteTodo = await pool.query(
-      "UPDATE todo SET done_yn = CASE WHEN done_yn = 'Y' THEN 'N' ELSE 'Y' END WHERE todo_id = $1",
+      "UPDATE todo SET done_yn = CASE WHEN done_yn = 'Y' THEN 'N' ELSE 'Y' END, updt_time = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')  WHERE todo_id = $1",
       [id]
     );
     res.json("todo was UPDATED.");
