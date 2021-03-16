@@ -104,6 +104,18 @@ app.post("/checkTodo/:id", async (req, res) => {
   }
 });
 
+app.get("/getDone", async (req, res) => {
+  try {
+    const doneList = await pool.query(
+      "SELECT todo_id, description, done_yn FROM todo WHERE done_yn IS NOT NULL AND ORDER BY todo_id"
+    );
+    res.json(todoList.rows);
+  } catch (err) {
+    console.error(err.message);
+    res.json(erro.message);
+  }
+});
+
 app.listen(5000, () => {
   console.log("server has started on port 5000.");
 });
