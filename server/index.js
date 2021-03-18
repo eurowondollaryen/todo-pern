@@ -107,12 +107,12 @@ app.post("/checkTodo/:id", async (req, res) => {
 app.get("/getDone", async (req, res) => {
   try {
     const doneList = await pool.query(
-      "SELECT todo_id, description, done_yn FROM todo WHERE done_yn IS NOT NULL AND ORDER BY todo_id"
+      "SELECT todo_id, description, done_yn FROM todo WHERE done_yn IS NOT NULL AND done_yn = '1' ORDER BY todo_id"
     );
-    res.json(todoList.rows);
+    res.json(doneList.rows);
   } catch (err) {
     console.error(err.message);
-    res.json(erro.message);
+    res.json(err.message);
   }
 });
 
