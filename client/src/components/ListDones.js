@@ -19,9 +19,7 @@ const ListDones = () => {
     getDones();
   }, []);
 
-  return (
-    <div>s</div>
-  );
+  return <div>s</div>;
 };
 
 export default ListDones;
