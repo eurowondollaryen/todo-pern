@@ -104,7 +104,7 @@ app.post("/checkTodo/:id", async (req, res) => {
   }
 });
 
-app.get("/getDone", async (req, res) => {
+app.get("/getDones", async (req, res) => {
   try {
     const doneList = await pool.query(
       "SELECT todo_id, description, done_yn FROM todo WHERE done_yn IS NOT NULL AND done_yn = '1' ORDER BY todo_id"
