@@ -64,10 +64,10 @@ const ListTodos = () => {
       <table className="table mt-5 text-center">
         <thead>
           <tr>
-            <th>Done</th>
-            <th>Description</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <th>처리여부</th>
+            <th>제목</th>
+            <th>수정</th>
+            <th>삭제</th>
           </tr>
         </thead>
         <tbody>
