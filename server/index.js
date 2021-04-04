@@ -87,14 +87,14 @@ app.delete("/deleteTodo/:id", async (req, res) => {
   }
 });
 
-//update a todo
+//update todo to done
 app.post("/checkTodo/:id", async (req, res) => {
   //await
   try {
     const { id } = req.params;
 
     const deleteTodo = await pool.query(
-      "UPDATE todo SET done_yn = CASE WHEN done_yn = 'Y' THEN 'N' ELSE 'Y' END, updt_time = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')  WHERE todo_id = $1",
+      "UPDATE todo SET done_yn = CASE WHEN done_yn = '1' THEN '0' ELSE '1' END, updt_time = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')  WHERE todo_id = $1",
       [id]
     );
     res.json("todo was UPDATED.");
