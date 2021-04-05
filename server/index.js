@@ -94,7 +94,8 @@ app.post("/checkTodo/:id", async (req, res) => {
     const { id } = req.params;
 
     const deleteTodo = await pool.query(
-      "UPDATE todo SET done_yn = CASE WHEN done_yn = '1' THEN '0' ELSE '1' END, updt_time = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')  WHERE todo_id = $1",
+      `UPDATE todo SET done_yn = CASE WHEN done_yn = '1' THEN '0' ELSE '1' END
+      , updt_time = TO_CHAR(NOW(), 'YYYYMMDDHH24MISS')  WHERE todo_id = $1`,
       [id]
     );
     res.json("todo was UPDATED.");
@@ -107,7 +108,11 @@ app.post("/checkTodo/:id", async (req, res) => {
 app.get("/getDones", async (req, res) => {
   try {
     const doneList = await pool.query(
-      "SELECT todo_id, description, done_yn FROM todo WHERE done_yn IS NOT NULL AND done_yn = '1' ORDER BY todo_id"
+      `SELECT todo_id, description, done_yn
+      FROM todo
+      WHERE done_yn IS NOT NULL
+      AND done_yn = '1'
+      ORDER BY todo_id`
     );
     res.json(doneList.rows);
   } catch (err) {
